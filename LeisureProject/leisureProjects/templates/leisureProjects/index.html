@@ -8,14 +8,12 @@
 
 {% if user.is_authenticated %}
 <!-- Top Buttons for logged-in users -->
-
     <div class="hero-image">
         <img src="{% static 'images/hobby.jpg' %}" alt="Hobby" class="img-fluid">
         <div class="hero-text">
             <h1>Hobby Tracker</h1>
         </div>
     </div>
-
     
     <div class="row mb-5 text-center">
         <div class="col-md-12">
@@ -30,7 +28,7 @@
 
         <div class="col-md-4 mb-3">
             <a href="#" class="btn btn-outline-secondary w-100 py-3 rounded-pill shadow-sm">
-                To Do Lists
+                Hobby Planner
             </a>
         </div>
 
@@ -39,6 +37,18 @@
                 Pomodoro Method
             </a>
         </div>
+
+        <!-- Spotify Player -->
+        <div class="spotify-player text-center my-4">
+            <h5>Relax with Some Music</h5>
+            <!-- Code Reference from "https://developer.spotify.com/documentation/embeds/tutorials/creating-an-embed" -->
+            <iframe style="border-radius:12px" 
+                src="https://open.spotify.com/embed/album/1WVIJaAboRSwJOe4u0n0Q7?utm_source=generator" 
+                width="300" height="380" frameborder="0" allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+            </iframe>
+        </div>
+        
     </div>
 
     
@@ -58,10 +68,30 @@
         </div>
 
         <div class="col-md-4 mb-3">
+            <a href="#" class="btn btn-outline-secondary w-100 py-3 rounded-pill shadow-sm">
+                Hobby Planner
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-3">
             <a href="#" id="pomodoro-button" class="btn btn-outline-success w-100 py-3 rounded-pill shadow-sm">
                 Pomodoro Method
             </a>
         </div>
+
+        <!-- Spotify Player -->
+        <div class="spotify-player text-center my-4">
+            <h5>Relax with Some Music</h5>
+            <!-- Code Reference from "https://developer.spotify.com/documentation/embeds/tutorials/creating-an-embed" -->
+            <iframe style="border-radius:12px" 
+                src="https://open.spotify.com/embed/album/1WVIJaAboRSwJOe4u0n0Q7?utm_source=generator" 
+                width="300" height="380" frameborder="0" allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+            </iframe>
+        </div>
+
+        
+
 
     </div>
 {% endif %}

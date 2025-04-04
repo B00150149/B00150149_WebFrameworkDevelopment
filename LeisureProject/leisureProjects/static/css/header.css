@@ -42,7 +42,12 @@ header nav ul li a:hover {
     }
 }
 
-
+/* Logo */
+.logo {
+    height: 10px; /* Adjust size as needed */
+    margin-right: 15px;
+    vertical-align: left;
+}
 
 
 
