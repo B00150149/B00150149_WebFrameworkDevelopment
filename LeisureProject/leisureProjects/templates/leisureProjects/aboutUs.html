@@ -1,0 +1,31 @@
+<!-- templates/about_us.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'header.css' %}">
+</head>
+<body>
+ 
+{% include 'includes/header.html' %}
+  
+    
+        <h2>About Us</h2>
+        <p>
+            Welcome to the Creative Hobby Management & Productivity Tracker! We are dedicated to helping you manage your creative hobbies like painting, writing, music, and DIY projects while staying productive. Our platform allows you to organize your hobby projects, set goals, track progress, and collaborate with others.
+        </p>
+        
+
+        <h3>Our Mission</h3>
+        <p>
+            Our goal is to combine creativity with productivity. Whether you’re learning to play an instrument, writing a novel, or working on a DIY project, we aim to help you stay focused and motivated to complete your hobby projects and achieve your personal goals.
+        </p>
+    
+    {% include 'includes/footer.html' %}
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% include 'includes/header.html' %}
+
+<h2>Project List</h2>
+<ul>
+  {% for project in projects %}
+    <li>{{ project.name }} - <a href="{% url 'createTask' project.id %}">Add Task</a></li>
+  {% endfor %}
+</ul>
+<a href="{% url 'createProject' %}">Create New Project</a>
+
+{% include 'includes/footer.html' %}

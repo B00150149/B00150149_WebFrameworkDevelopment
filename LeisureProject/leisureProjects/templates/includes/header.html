@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Site Title</title>
+    
+    <!-- Link to your static CSS file -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/aboutUs">About</a></li>
+                
+                {% if user.is_authenticated %}
+                    <li><a href="/projectList">Leisure</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="/register">Sign Up</a></li>
+                    <li><a href="/login">Login</a></li>
+                {% endif %}
+            </ul>
+
+            
+            
+        </nav>
+    </header>
+
+    <!-- Your page content goes here -->
+
+</body>
+</html>

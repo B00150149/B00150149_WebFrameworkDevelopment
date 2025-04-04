@@ -1,0 +1,6 @@
+to run
+py manage.py runserver
+
+
+to access pools page 
+http://localhost:8000/pollsProject/

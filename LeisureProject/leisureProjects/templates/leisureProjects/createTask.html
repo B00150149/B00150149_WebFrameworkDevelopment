@@ -1,0 +1,11 @@
+{% include 'includes/header.html' %}
+
+
+<h2>Add Task to {{ project.name }}</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add Task</button>
+</form>
+
+{% include 'includes/footer.html' %}

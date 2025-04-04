@@ -1,0 +1,14 @@
+{% include 'includes/header.html' %}
+
+
+<h2>Login</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Login</button>
+</form>
+<a href="{% url 'register' %}">Don't have an account? Sign up</a>
+
+
+{% include 'includes/footer.html' %}
+
