@@ -10,7 +10,7 @@
 <div class="task-container">
   {% for task in tasks %}
   <div class="task-card">
-    <h3>{{ task.name }}</h3>
+    <h3>{{ task.title }}</h3>
     <p>{{ task.description }}</p>
     <p>Due: {{ task.due_date }}</p>
     <p>Status: {{ task.completed|yesno:"Completed,Incomplete" }}</p>

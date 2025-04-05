@@ -50,6 +50,7 @@ class Task(models.Model):
     description = models.TextField()
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     completed = models.BooleanField(default=False)
+    due_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f'Task: {self.title} (Assigned to: {self.assigned_to.username if self.assigned_to else "Unassigned"})'
