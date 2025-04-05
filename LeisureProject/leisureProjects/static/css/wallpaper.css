@@ -1,0 +1,27 @@
+.wallpaper-radio {
+    display: none;
+}
+
+.wallpaper-option {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.wallpaper-option:hover {
+    border-color: #4CAF50;
+}
+
+.wallpaper-radio:checked + .wallpaper-option {
+    border-color: #4CAF50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.wallpaper-thumbnail {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}

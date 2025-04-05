@@ -63,6 +63,12 @@ def create_project(request):
         form = ProjectForm()
     return render(request, 'leisureProjects/createProject.html', {'form': form})
 
+@login_required
+def task_list(request, project_id):
+    project = Project.objects.get(id=project_id)
+    tasks = Task.objects.filter(project=project)
+    return render(request, 'leisureProjects/taskList.html', {'project': project, 'tasks': tasks})
+
 def create_task(request, project_id):
     project = Project.objects.get(id=project_id)
     if request.method == "POST":

@@ -1,0 +1,23 @@
+{% load static %}
+{% include 'includes/header.html' %}
+
+<link rel="stylesheet" href="{% static 'css/projectList.css' %}">
+
+<h2>Tasks for {{ project.name }}</h2>
+<a href="{% url 'createTask' project.id %}" class="btn">Add New Task</a>
+<a href="{% url 'projectList' %}" class="btn">Back to Projects</a>
+
+<div class="task-container">
+  {% for task in tasks %}
+  <div class="task-card">
+    <h3>{{ task.name }}</h3>
+    <p>{{ task.description }}</p>
+    <p>Due: {{ task.due_date }}</p>
+    <p>Status: {{ task.completed|yesno:"Completed,Incomplete" }}</p>
+  </div>
+  {% empty %}
+  <p>No tasks yet for this project.</p>
+  {% endfor %}
+</div>
+
+{% include 'includes/footer.html' %}

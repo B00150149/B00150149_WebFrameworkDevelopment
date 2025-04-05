@@ -1,11 +1,27 @@
+{% load static %}
 {% include 'includes/header.html' %}
+{% load static %}
+<!-- <script src="{% static 'js/pomodero.js' %}"></script> -->
+<link rel="stylesheet" href="{% static 'css/projectList.css' %}">
 
 <h2>Project List</h2>
-<ul>
+<a href="{% url 'createProject' %}" class="btn">Create New Project</a>
+
+<div class="project-container">
   {% for project in projects %}
-    <li>{{ project.name }} - <a href="{% url 'createTask' project.id %}">Add Task</a></li>
+  <a href="{% url 'taskList' project.id %}" class="project-link">
+    <div class="project-card">
+      <img src="{% static 'images/' %}{{ project.wallpaper }}" alt="{{ project.name }} wallpaper" class="project-image">
+      <div class="project-info">
+        <h3>{{ project.name }}</h3>
+        <a href="{% url 'createTask' project.id %}" class="btn">Add Task</a>
+      </div>
+    </div>
+  </a>
   {% endfor %}
-</ul>
-<a href="{% url 'createProject' %}">Create New Project</a>
+</div>
+
+
+
 
 {% include 'includes/footer.html' %}

@@ -19,10 +19,27 @@ class Profile(models.Model):
         return f'{self.user.username} ({self.get_role_display()}) - {self.email}'
 
 class Project(models.Model):
+    WALLPAPER_CHOICES = [
+        ('wallpaper1.jpg', 'Wallpaper 1'),
+        ('wallpaper2.jpg', 'Wallpaper 2'), 
+        ('wallpaper3.jpg', 'Wallpaper 3'),
+        ('wallpaper4.jpg', 'Wallpaper 4'),
+        ('wallpaper5.jpg', 'Wallpaper 5'),
+        ('wallpaper6.jpg', 'Wallpaper 6'),
+        ('wallpaper7.jpg', 'Wallpaper 6'),
+        ('wallpaper8.jpg', 'Wallpaper 6'),
+      
+    ]
+    
     name = models.CharField(max_length=200)
     description = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    wallpaper = models.CharField(
+        max_length=50,
+        choices=WALLPAPER_CHOICES,
+        default='wallpaper1.jpg'
+    )
 
     def __str__(self):
         return f'Project: {self.name} (Owner: {self.owner.username})'
