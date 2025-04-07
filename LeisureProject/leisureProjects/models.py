@@ -4,8 +4,8 @@ from django.utils import timezone
 
 # User Roles
 USER_ROLES = [
-    ('solo', 'Solo Hobbyist'),
-    ('team', 'Team Hobbyist'),
+    ('user', 'Standard User'),
+    ('premium', 'Premium User'),
     ('organizer', 'Event Organizer'),
 ]
 

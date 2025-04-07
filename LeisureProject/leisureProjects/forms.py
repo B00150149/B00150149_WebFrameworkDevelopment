@@ -6,8 +6,8 @@ from .models import Project, Task, Profile
 # Form for registering a new user with roles
 class RegisterForm(UserCreationForm):
     ROLE_CHOICES = [
-        ('solo', 'Solo Hobbyist'),
-        ('team', 'Team Hobbyist'),
+        ('user', 'Standard User'),
+        ('premium', 'Premium User'),
         ('organizer', 'Event Organizer'),
     ]
     role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.Select(), label="Select Role")
