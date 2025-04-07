@@ -48,7 +48,7 @@ def logout_view(request):
 
 @login_required
 def project_list(request):
-    projects = Project.objects.all()
+    projects = Project.objects.filter(owner=request.user)
     return render(request, 'leisureProjects/projectList.html', {'projects': projects})
 
 def create_project(request):
