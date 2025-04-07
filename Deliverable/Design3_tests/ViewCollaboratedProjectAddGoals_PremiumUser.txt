@@ -1,0 +1,20 @@
+Feature: View Collaborated Hobby Project and add goal 
+
+User Story: 
+	As a user, I want to be able to View the hobby project so that I can add targets/goals and track progress over time in it.
+
+
+Scenario: 
+	User sees the collaborated Project in Hobby page
+        Given that User is already logged in the user should see all the features
+        The user should be able to see trhe collaborated project and add goalks
+
+Test Design: 
+        Log in as User and view the "Hobby" page
+        Click on Collaborated Hobby Project "e.g Learn Guittare"
+	To add goals click on a  "Add Goal"
+        Fill in the "Description" field with "Learn the node base"
+	Click on the "Create Goal" button
+
+Outcome:
+       The user collaborated with should see The new hobby appear on "Hobby" page with the correct details and add goals to it as well

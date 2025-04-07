@@ -1,0 +1,126 @@
+Case Study: Leisure Productivity App – Use Case Tests
+
+#### Feature 1: **Solo User - Create and Manage Personal Leisure Projects**
+**User Story:**
+As a **Solo User**, I want to create and manage my personal leisure projects so that I can plan tasks for my free time, such as reading, yoga, or side projects.
+
+**Acceptance Criteria:**
+1. A **Solo User** can create a new leisure project and set tasks for that project.
+2. A **Solo User** can update the details of the leisure project and its tasks.
+3. A **Solo User** can mark tasks as completed once finished.
+
+**BDD Cucumber Scenarios:**
+
+```gherkin
+Feature: Solo User Creating and Managing Leisure Projects
+
+  Scenario: Solo User creates a new leisure project
+    Given the Solo User is logged in
+    When they create a new leisure project titled "Reading Challenge"
+    Then the project "Reading Challenge" should appear in their list of projects
+
+  Scenario: Solo User adds tasks to a leisure project
+    Given the Solo User has a leisure project "Reading Challenge"
+    When they add a task "Read Chapter 1"
+    Then the task "Read Chapter 1" should be added to the "Reading Challenge" project
+
+  Scenario: Solo User marks a task as completed
+    Given the Solo User has a task "Read Chapter 1" in their project "Reading Challenge"
+    When they mark "Read Chapter 1" as completed
+    Then the task "Read Chapter 1" should be marked as completed in the system
+```
+
+#### Feature 2: **Premium User - Join a Shared Leisure Project**
+**User Story:**
+As a **Premium User**, I want to join shared leisure projects so that I can collaborate with friends or coworkers on shared activities, like a "Weekend Wellness Plan."
+
+**Acceptance Criteria:**
+1. A **Premium User** can browse and join shared leisure projects created by others.
+2. A **Premium User** can participate in and track shared activities.
+
+**BDD Cucumber Scenarios:**
+
+```gherkin
+Feature: Premium User Joining Shared Leisure Projects
+
+  Scenario: Premium User browses and joins a shared leisure project
+    Given the Premium User is logged in
+    When they browse available shared leisure projects
+    And they join the project titled "Weekend Wellness Plan"
+    Then the Premium User should be able to view and contribute to the "Weekend Wellness Plan" project
+
+  Scenario: Premium User participates in a shared leisure project
+    Given the Premium User has joined the "Weekend Wellness Plan" project
+    When they add a new task "Morning Yoga" to the project
+    Then the task "Morning Yoga" should be added to the "Weekend Wellness Plan" project
+```
+
+#### Feature 3: **Premium User - Use Shared Pomodoro Timer and Progress Tracking**
+**User Story:**
+As a **Premium User**, I want to use a shared Pomodoro timer and track my progress along with my collaborators so that we can stay focused and productive together.
+
+**Acceptance Criteria:**
+1. A **Premium User** can start a shared Pomodoro timer for focused sessions.
+2. The **Premium User** can track progress in real-time with others.
+
+**BDD Cucumber Scenarios:**
+
+```gherkin
+Feature: Premium User Using Shared Pomodoro Timer
+
+  Scenario: Premium User starts a shared Pomodoro timer
+    Given the Premium User is part of a shared leisure project "Weekend Wellness Plan"
+    When they start the Pomodoro timer for a focus session
+    Then the Pomodoro timer should be visible to all collaborators in the project
+
+  Scenario: Premium User tracks progress in a shared Pomodoro session
+    Given the Premium User has started a Pomodoro session for "Morning Yoga"
+    When they complete one Pomodoro cycle
+    Then the system should update the progress for all users in the "Weekend Wellness Plan" project
+```
+
+#### Feature 4: **Reviewer - Create and Publish Wellness/Productivity Templates**
+**User Story:**
+As a **Reviewer**, I want to create and publish wellness or productivity templates, such as a "7-Day Relaxation Plan," to help other users improve their leisure and productivity activities.
+
+**Acceptance Criteria:**
+1. A **Reviewer** can create a template for leisure or productivity activities.
+2. A **Reviewer** can publish their template for public use.
+
+**BDD Cucumber Scenarios:**
+
+```gherkin
+Feature: Reviewer Creating and Publishing Templates
+
+  Scenario: Reviewer creates a new wellness template
+    Given the Reviewer is logged in
+    When they create a new template titled "7-Day Relaxation Plan"
+    Then the template "7-Day Relaxation Plan" should be saved in the system
+
+  Scenario: Reviewer publishes a wellness template
+    Given the Reviewer has created the template "7-Day Relaxation Plan"
+    When they publish the template
+    Then the "7-Day Relaxation Plan" template should be available to all users
+```
+
+#### Feature 5: **Reviewer - View All Public Leisure Projects and Leave Feedback**
+**User Story:**
+As a **Reviewer**, I want to view all public leisure projects and leave feedback or tips to motivate other users and help them improve their projects.
+
+**Acceptance Criteria:**
+1. A **Reviewer** can view public leisure projects created by other users.
+2. A **Reviewer** can leave feedback or suggestions on a project.
+
+**BDD Cucumber Scenarios:**
+
+```gherkin
+Feature: Reviewer Viewing and Providing Feedback on Public Leisure Projects
+
+  Scenario: Reviewer views a public leisure project
+    Given the Reviewer is logged in
+    When they browse the list of public leisure projects
+    Then they should be able to see all available public projects
+
+  Scenario: Reviewer leaves feedback on a public leisure project
+    Given the Reviewer is viewing the public project "Reading Challenge"
+    When they leave feedback "Great task list! Maybe add a meditation session."

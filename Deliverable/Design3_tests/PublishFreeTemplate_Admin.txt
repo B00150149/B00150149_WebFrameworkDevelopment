@@ -1,0 +1,32 @@
+Feature: Reviewer - Create and Publish Wellness/Productivity Templates
+
+User Story: As a Admin, I want to create and publish wellness or productivity templates, such as a "7-Day Relaxation Plan," to help other users improve their leisure and productivity activities.
+
+
+Scenario: Admin creates a new wellness template
+    Given the Reviewer is logged in
+    When they create a new template titled "7-Day Relaxation Plan"
+    Then the template "7-Day Relaxation Plan" should be saved in the system
+
+  Scenario: Reviewer publishes a wellness template
+    Given the Reviewer has created the template "7-Day Relaxation Plan"
+    When they publish the template
+    Then the "7-Day Relaxation Plan" template should be available to all users
+
+Test Design: 
+        Log in as Admin and on the "Publish Template" page
+        Click on "Publish Template"
+        Fill in the "Title" field with "7-Day Relaxation Plan"
+        Select the Wallpaper you want to set for your hobby 
+        Click on the "Make Template" button
+        
+	Click on "Create goals" button
+	Fill in the "Description" field with "Go for a spa treatment"
+	Click on "Create Goals" button
+
+	On the bottom right Click "Publish template" to publish it to public
+
+
+
+Outcome:
+       The Admin can publish free templates for all users

@@ -1,0 +1,27 @@
+Feature: Create Hobby Project Goals
+
+User Story: 
+	As a user(Hobbist, Collaborator) I want to be able to create targets/goals for my hobby to track my progress overtime,
+	
+
+Scenario1: 
+	User wants to create a new target so they can track it
+        Given that User is already logged in the user should see all the features
+        The user should be able to go in their hobby and view their goals
+	The user can Click "Create Goal" button to create goals
+
+Test Design: 
+        Log in as User and on the "Create Hobby Goal" page
+        Click on "Create Hobby button"
+        Fill in the "Description" field with "Learn to play basic chords"
+        Select "Due Date" as "2025-12-31"
+        Click on the "Create Hobby" button
+	When achieved user can check the tick button	
+
+Outcome:
+       User should see The new hobby goal appear on selected hobby projects  page with the correct details
+	When the hobby is done the progress bar should go up
+
+
+
+

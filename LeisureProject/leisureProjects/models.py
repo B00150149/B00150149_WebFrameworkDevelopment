@@ -27,8 +27,7 @@ class Project(models.Model):
         ('wallpaper5.jpg', 'Wallpaper 5'),
         ('wallpaper6.jpg', 'Wallpaper 6'),
         ('wallpaper7.jpg', 'Wallpaper 6'),
-        ('wallpaper8.jpg', 'Wallpaper 6'),
-      
+        ('wallpaper8.jpg', 'Wallpaper 6'), 
     ]
     
     name = models.CharField(max_length=200)

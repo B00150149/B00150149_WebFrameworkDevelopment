@@ -1,0 +1,37 @@
+Feature: To-Do List
+  
+
+User story: User Story: 
+	As a user= I want to be able to make small to do hobby list without making a project for it
+  
+Scenario 1: Add New Task to To-Do List
+	Given I am on the To-Do List page
+        When I enter a task in the "Add Task" input box
+        And I click on the "Add Task" button
+        Then the task should appear in the list of tasks
+
+Scenario 2: Mark Task as Completed
+        Given I have added a task to the To-Do list
+        When I click on the "Mark as Done" checkbox next to the task
+        Then the task should be marked as completed and crossed out
+
+Scenario 3: Delete Task from To-Do List
+        Given I have added a task to the To-Do list
+        When I click on the "Delete" button next to the task
+        Then the task should be removed from the list
+
+Test Design:
+	In home page click "To do list" button
+	Right "Complete the painting" in empty textfield
+	Click "+" to addit to the list
+	Click on the checkbox next to the task if done
+	Click on the "Delete" button next to the task to delete the task
+	
+
+Outcome: 
+	The users should able to make to do list with anything and mark it done or delete depending on user need.
+
+			
+
+       
+
