@@ -24,7 +24,12 @@
                 <li><a href="/aboutUs">About</a></li>
                 
                 {% if user.is_authenticated %}
-                    <li><a href="/projectList">Leisure</a></li>
+                    {% if user.profile.role == 'organizer' %}
+                        <li><a href="{% url 'createChallenge' %}">Create Challenge</a></li>
+                        <li><a href="{% url 'challengeList' %}">Challenges</a></li>
+                    {% else %}
+                        <li><a href="/projectList">Leisure</a></li>
+                    {% endif %}
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
                     <li><a href="/register">Sign Up</a></li>

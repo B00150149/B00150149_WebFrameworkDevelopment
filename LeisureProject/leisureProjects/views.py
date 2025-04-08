@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 #Can only access when logged in
 from django.contrib.auth.decorators import login_required
-from .forms import ProjectForm, TaskForm,  RegisterForm
+from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm
 
 
 
@@ -45,6 +45,9 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+
+
 
 @login_required
 def project_list(request):
@@ -100,6 +103,23 @@ def task_list(request, project_id):
         'tasks': tasks,
         'now': timezone.now()
     })
+
+@login_required
+def create_challenge(request):
+    if request.method == 'POST':
+        form = ChallengeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('challengeList') 
+    else:
+        form = ChallengeForm()
+    return render(request, 'leisureProjects/createChallenge.html', {'form': form})
+
+from .models import Challenge
+
+def challenge_list(request):
+    challenges = Challenge.objects.all().order_by('-start_date')
+    return render(request, 'leisureProjects/challengeList.html', {'challenges': challenges})
 
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST

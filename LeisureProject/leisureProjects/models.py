@@ -44,7 +44,33 @@ class Project(models.Model):
 
     def __str__(self):
         return f'Project: {self.name} (Owner: {self.owner.username})'
-    
+
+#For user: Event Organizer
+class Challenge(models.Model):
+    WALLPAPER_CHOICES = [
+        ('wallpaper1.jpg', 'Wallpaper 1'),
+        ('wallpaper2.jpg', 'Wallpaper 2'), 
+        ('wallpaper3.jpg', 'Wallpaper 3'),
+        ('wallpaper4.jpg', 'Wallpaper 4'),
+        ('wallpaper5.jpg', 'Wallpaper 5'),
+        ('wallpaper6.jpg', 'Wallpaper 6'),
+        ('wallpaper7.jpg', 'Wallpaper 6'),
+        ('wallpaper8.jpg', 'Wallpaper 6'), 
+    ] 
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    age_category = models.TextField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+    wallpaper = models.CharField(
+        max_length=50,
+        choices=WALLPAPER_CHOICES,
+        default='wallpaper1.jpg'
+    )
+
+    def __str__(self):
+        return self.title
+      
 class Task(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -55,7 +81,8 @@ class Task(models.Model):
 
     def __str__(self):
         return f'Task: {self.title} (Assigned to: {self.assigned_to.username if self.assigned_to else "Unassigned"})'
-    
+
+
 class TimeLog(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

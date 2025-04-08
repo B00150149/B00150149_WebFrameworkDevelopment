@@ -1,0 +1,31 @@
+{% load static %}
+{% include 'includes/header.html' %}
+
+<link rel="stylesheet" href="{% static 'css/wallpaper.css' %}">
+
+{% block content %}
+<div class="container">
+    <h2>Set Up a New Challenge</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create Challenge</button>
+    </form>
+</div>
+{% endblock %}
+
+<h3>Select Wallpaper:</h3>
+  <div class="wallpaper-options">
+    {% for choice in form.wallpaper %}
+      <label>
+        {{ choice.tag }}
+        <div class="wallpaper-option">
+        <img src="{% static 'images/'|add:choice.data.value %}" 
+               class="wallpaper-thumbnail"
+               alt="{{ choice.data.label }}">
+        </div>
+      </label>
+    {% endfor %}
+  </div>
+
+{% include 'includes/footer.html' %}
