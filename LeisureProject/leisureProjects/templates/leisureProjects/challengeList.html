@@ -1,52 +1,25 @@
-<!-- {% load static %}
-{% include 'includes/header.html' %}
-
-
-{% block content %}
-<div class="container">
-    <h2>All Challenges</h2>
-
-    {% if challenges %}
-        <ul class="list-group">
-            {% for challenge in challenges %}
-                <li class="list-group-item mb-3">
-                    <h4>{{ challenge.title }} <small class="text-muted"></small></h4>
-                    <p>{{ challenge.description }}</p>
-                    <p>{{ challenge.age_category }}</p>
-                    <p><strong>Start:</strong> {{ challenge.start_date }} | <strong>End:</strong> {{ challenge.end_date }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No challenges available yet.</p>
-    {% endif %}
-</div>
-{% endblock %}
-
-{% include 'includes/footer.html' %} -->
-
-
-
 {% load static %}
 {% include 'includes/header.html' %}
 <link rel="stylesheet" href="{% static 'css/projectList.css' %}">
 
 <h2>All Challenges</h2>
+<div class="project-actions">
+    <a href="{% url 'createChallenge' %}" class="btn">Create New Challenge</a>
+</div>
 
 {% if challenges %}
 <div class="project-container">
     {% for challenge in challenges %}
+    <a href="{% url 'taskList' challenge.id %}" class="project-link">
     <div class="project-card">
-        <!-- Optional Challenge Image -->
-        <!-- <img src="{% static 'images/default_challenge.jpg' %}" alt="Challenge Image" class="project-image"> -->
-
+        <img src="{% static 'images/' %}{{ challenge.wallpaper }}" alt="{{ challenge.title }} wallpaper" class="project-image">
         <div class="project-info">
             <h3>{{ challenge.title }}</h3>
-            <p>{{ challenge.description }}</p>
             <p><strong>Category:</strong> {{ challenge.age_category }}</p>
             <p><strong>Start:</strong> {{ challenge.start_date }} | <strong>End:</strong> {{ challenge.end_date }}</p>
         </div>
     </div>
+    </a>
     {% endfor %}
 </div>
 {% else %}
