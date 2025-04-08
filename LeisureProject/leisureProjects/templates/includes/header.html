@@ -29,6 +29,7 @@
                         <li><a href="{% url 'challengeList' %}">Challenges</a></li>
                     {% else %}
                         <li><a href="/projectList">Leisure</a></li>
+                        <li><a href="{% url 'challengeList' %}">Challenges</a></li>
                     {% endif %}
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}

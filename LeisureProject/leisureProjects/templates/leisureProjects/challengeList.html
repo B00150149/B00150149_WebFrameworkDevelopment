@@ -3,14 +3,16 @@
 <link rel="stylesheet" href="{% static 'css/projectList.css' %}">
 
 <h2>All Challenges</h2>
+{% if user.is_authenticated and user.profile.role == 'organizer' %}
 <div class="project-actions">
     <a href="{% url 'createChallenge' %}" class="btn">Create New Challenge</a>
 </div>
+{% endif %}
 
 {% if challenges %}
 <div class="project-container">
     {% for challenge in challenges %}
-    <a href="{% url 'taskList' challenge.id %}" class="project-link">
+    <a href="#" class="project-link">
     <div class="project-card">
         <img src="{% static 'images/' %}{{ challenge.wallpaper }}" alt="{{ challenge.title }} wallpaper" class="project-image">
         <div class="project-info">
