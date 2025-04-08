@@ -48,20 +48,46 @@ def logout_view(request):
 
 @login_required
 def project_list(request):
-    projects = Project.objects.filter(owner=request.user)
-    return render(request, 'leisureProjects/projectList.html', {'projects': projects})
+    # Get both owned and collaborative projects
+    owned_projects = Project.objects.filter(owner=request.user)
+    collaborative_projects = Project.objects.filter(collaborators=request.user)
+    is_premium = request.user.profile.role == 'premium'
+    return render(request, 'leisureProjects/projectList.html', {
+        'owned_projects': owned_projects,
+        'collaborative_projects': collaborative_projects,
+        'is_premium': is_premium
+    })
+
+from django.contrib.auth.models import User
 
 def create_project(request):
+    is_premium = request.user.is_authenticated and request.user.profile.role == 'premium'
+    
     if request.method == "POST":
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
             project.owner = request.user
+            if is_premium and 'is_collaborative' in request.POST:
+                project.is_collaborative = True
             project.save()
+            
+            # Add collaborators if it's a collaborative project
+            if project.is_collaborative and 'collaborators' in request.POST:
+                collaborators = User.objects.filter(id__in=request.POST.getlist('collaborators'))
+                project.collaborators.set(collaborators)
+                
             return redirect('projectList')
     else:
         form = ProjectForm()
-    return render(request, 'leisureProjects/createProject.html', {'form': form})
+        users = User.objects.exclude(id=request.user.id) if is_premium else []
+        
+    return render(request, 'leisureProjects/createProject.html', {
+        'form': form,
+        'is_premium': is_premium,
+        'users': users,
+        'collaborate': request.GET.get('collaborate') == 'true'
+    })
 
 from django.utils import timezone
 

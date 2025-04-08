@@ -31,12 +31,37 @@ class RegisterForm(UserCreationForm):
 
 # Form for creating a new project
 class ProjectForm(forms.ModelForm):
+    is_collaborative = forms.BooleanField(
+        required=False,
+        label="Make this a collaborative project",
+        help_text="Allow other users to contribute to this project"
+    )
+    
+    collaborators = forms.ModelMultipleChoiceField(
+        queryset=User.objects.none(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
+        label="Add collaborators"
+    )
+
     class Meta:
         model = Project
-        fields = ['name', 'description', 'wallpaper']
+        fields = ['name', 'description', 'wallpaper', 'is_collaborative', 'collaborators']
         widgets = {
             'wallpaper': forms.RadioSelect(attrs={'class': 'wallpaper-radio'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        is_premium = kwargs.pop('is_premium', False)
+        super().__init__(*args, **kwargs)
+        
+        if user:
+            self.fields['collaborators'].queryset = User.objects.exclude(id=user.id)
+        
+        if not is_premium:
+            self.fields.pop('is_collaborative', None)
+            self.fields.pop('collaborators', None)
 
 # Form for creating a new task
 class TaskForm(forms.ModelForm):

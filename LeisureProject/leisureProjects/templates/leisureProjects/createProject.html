@@ -2,8 +2,9 @@
 {% include 'includes/header.html' %}
 
 <link rel="stylesheet" href="{% static 'css/wallpaper.css' %}">
+<link rel="stylesheet" href="{% static 'css/collaborators.css' %}">
 
-<h2>Create Project</h2>
+<h2>Create {% if request.GET.collaborate %}Collaborative {% endif %}Project</h2>
 <form method="post">
   {% csrf_token %}
   
@@ -12,6 +13,20 @@
   
   {{ form.description.label_tag }}
   {{ form.description }}
+  
+  {% if is_premium and request.GET.collaborate %}
+  <input type="hidden" name="is_collaborative" value="true">
+  
+  <div id="collaborators-section">
+    <h3>Add Collaborators:</h3>
+    <select name="collaborators" multiple class="form-control">
+      {% for user in users %}
+        <option value="{{ user.id }}">{{ user.username }}</option>
+      {% endfor %}
+    </select>
+    <small class="text-muted">Hold Ctrl/Cmd to select multiple users</small>
+  </div>
+  {% endif %}
   
   <h3>Select Wallpaper:</h3>
   <div class="wallpaper-options">
