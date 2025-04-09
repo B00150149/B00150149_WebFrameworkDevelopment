@@ -13,11 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('timer-display').textContent = `${minutesString}:${secondsString}`;
     }
 
-    // Show Pomodoro timer when "Pomodoro Method" button is clicked
-    document.getElementById('pomodoro-button').addEventListener('click', function() {
-        document.getElementById('pomodoro-timer').style.display = 'block';
-    });
-
     // Start button functionality
     document.getElementById('start-button').addEventListener('click', function() {
         if (!isRunning) {
