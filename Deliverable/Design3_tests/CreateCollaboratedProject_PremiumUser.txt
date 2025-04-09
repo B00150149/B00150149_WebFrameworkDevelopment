@@ -4,10 +4,12 @@ User Story:
 	As a collaborator, I want to be able to create hobby project and share it with other user,
 	So that we can set targets/goals and track progress over time in it.
 
+
 Scenario1: 
-	Collaborator wants to create a new hobby project and share it with his friend(otheruser)
+	Collaborator wants to create a new hobby project and share it with his friend(otherUser)
         Given that Collaborator is already logged in the user should see all the features
         The user should be able to create their own hobby Project and collaborate.
+
 
 Test Design: 
         Log in as User and on the "Create Hobby" page
@@ -16,6 +18,7 @@ Test Design:
 	Select the user they want to collaborate with
         Select the Wallpaper you want to set for your hobby 
         Click on the "Create Hobby" button
+
 
 Outcome:
        The collaborator as well the user collaborated with should see The new hobby appear on "Hobby" page with the correct details

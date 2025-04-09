@@ -1,0 +1,19 @@
+Feature: Users giving Feedback on Challenges
+
+
+User Story: 
+	As a user, I want to give feedback and new idea for next challenge
+
+Scenario: 
+	User leaves feedback on a challenge
+        Given the User is viewing the challenge "walking for 48 hours in a month"
+        They leave feedback "Great task list! Maybe add a meditation session."
+
+Test Design:
+	Log in as user and go to Reviews page
+	Fill in the name of the challenge the reviews for
+	Fill "Review" box with the review "Great task list! Maybe add a meditation session."
+        Click on "Add Review" Button
+
+Outcome:
+	The review will be sent to the admin to analyze the challenges review and take ideas for new challenges

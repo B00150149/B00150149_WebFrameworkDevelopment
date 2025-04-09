@@ -2,13 +2,13 @@ Feature: To-Do List
   
 
 User story: User Story: 
-	As a user= I want to be able to make small to do hobby list without making a project for it
+	As a user= I want to be able to make small to do list without making a project for it
   
 Scenario 1: Add New Task to To-Do List
-	Given I am on the To-Do List page
-        When I enter a task in the "Add Task" input box
-        And I click on the "Add Task" button
-        Then the task should appear in the list of tasks
+	Given I am on the home page
+        When I enter a task in the input box
+        And I click on the "Add" button
+        Then the task should appear in the to do list on the same page
 
 Scenario 2: Mark Task as Completed
         Given I have added a task to the To-Do list
@@ -21,9 +21,9 @@ Scenario 3: Delete Task from To-Do List
         Then the task should be removed from the list
 
 Test Design:
-	In home page click "To do list" button
+	In home page on right side you will see an input box
 	Right "Complete the painting" in empty textfield
-	Click "+" to addit to the list
+	Click "Add" to add it to the list
 	Click on the checkbox next to the task if done
 	Click on the "Delete" button next to the task to delete the task
 	

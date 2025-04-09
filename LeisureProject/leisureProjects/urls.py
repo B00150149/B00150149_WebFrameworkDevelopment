@@ -15,4 +15,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name="logout"),
     path('taskList/<int:project_id>/', views.task_list, name="taskList"),
     path('tasks/<int:task_id>/toggle/', views.toggle_task_completion, name="toggleTaskCompletion"),
+    path('create-todo/', views.create_todo, name="createTodo"),
 ]

@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Project, Task
+from .models import Project, Task, Todo
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 #Can only access when logged in
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm
@@ -25,6 +27,9 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+            # Create profile for new user with default 'user' role
+            from .models import Profile
+            Profile.objects.create(user=user, role='user', email=user.email)
             login(request, user)
             return redirect('index')
     else:
@@ -54,7 +59,7 @@ def project_list(request):
     # Get both owned and collaborative projects
     owned_projects = Project.objects.filter(owner=request.user)
     collaborative_projects = Project.objects.filter(collaborators=request.user)
-    is_premium = request.user.profile.role == 'premium'
+    is_premium = hasattr(request.user, 'profile') and request.user.profile.role == 'premium'
     return render(request, 'leisureProjects/projectList.html', {
         'owned_projects': owned_projects,
         'collaborative_projects': collaborative_projects,
@@ -64,7 +69,7 @@ def project_list(request):
 from django.contrib.auth.models import User
 
 def create_project(request):
-    is_premium = request.user.is_authenticated and request.user.profile.role == 'premium'
+    is_premium = request.user.is_authenticated and hasattr(request.user, 'profile') and request.user.profile.role == 'premium'
     
     if request.method == "POST":
         form = ProjectForm(request.POST)
@@ -148,3 +153,16 @@ def toggle_task_completion(request, task_id):
         return JsonResponse({'success': True, 'completed': task.completed})
     except Task.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
+
+@csrf_exempt
+def create_todo(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        if title and request.user.is_authenticated:
+            todo = Todo.objects.create(
+                title=title,
+                user=request.user
+            )
+            return JsonResponse({'status': 'success', 'id': todo.id})
+        return JsonResponse({'status': 'error'}, status=400)
+    return JsonResponse({'status': 'error'}, status=405)

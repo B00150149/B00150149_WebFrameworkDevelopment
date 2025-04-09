@@ -1,7 +1,7 @@
 Feature: Create Hobby Project Goals
 
 User Story: 
-	As a user(Hobbist, Collaborator) I want to be able to create targets/goals for my hobby to track my progress overtime,
+	As a user(Standard, Premium) I want to be able to create targets/goals for hobby to track my progress overtime,
 	
 
 Scenario1: 
@@ -17,6 +17,7 @@ Test Design:
         Select "Due Date" as "2025-12-31"
         Click on the "Create Hobby" button
 	When achieved user can check the tick button	
+
 
 Outcome:
        User should see The new hobby goal appear on selected hobby projects  page with the correct details

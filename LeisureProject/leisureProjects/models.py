@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
+
 # User Roles
 USER_ROLES = [
     ('user', 'Standard User'),
@@ -91,3 +92,11 @@ class TimeLog(models.Model):
 
     def __str__(self):
         return f'TimeLog: {self.task.title} by {self.user.username} (From {self.start_time} to {self.end_time})'
+
+class Todo(models.Model):
+    title = models.CharField(max_length=200)
+    completed = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Todo: {self.title} (User: {self.user.username})'

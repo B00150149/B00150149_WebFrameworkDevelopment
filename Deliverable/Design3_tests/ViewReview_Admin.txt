@@ -1,0 +1,23 @@
+Feature: Admin Viewing Feedback on Challenges
+
+User Story: 
+	As a Admin, I want to view all challenges and see feedback improve/ motivate other users on their leisure activities or take ideas for next challenge.
+
+
+Scenario: Users(Standard+ Premium) give feedback on certain challenge
+    Given the Admin is logged in
+    They should be able to view the projects reviews left by the user
+
+
+Test Design:
+	Log in as Admin and go to Challenge Reviews page
+        The reviews and the challenge the review is on will be displayed on the screen
+
+
+Outcome: 
+	The admin should be able to view review of all challenges	
+
+
+
+
+

@@ -39,6 +39,8 @@
                     </ul>
                     <div class="input-group">
                         <input type="text" id="todo-input" class="form-control" placeholder="Add new task...">
+                        <!-- added csrf token so it saves in db -->
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                         <button class="btn btn-primary" onclick="addTask()">Add</button>
                     </div>
                 </div>
