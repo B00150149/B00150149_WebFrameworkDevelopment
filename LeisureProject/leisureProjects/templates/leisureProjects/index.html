@@ -2,7 +2,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 {% load static %}
-<script src="{% static 'js/pomodero.js' %}"></script>
+<script src="{% static 'js/toDo.js' %}"></script>   <!---got To do List js-->
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 
 {% if user.is_authenticated %}
@@ -19,21 +19,32 @@
             <h3>Welcome to Creative Hobby Tracker</h3>
         </div>
 
-        <div class="col-md-4 mb-3">
-            <a href="#" class="btn btn-outline-secondary w-100 py-3 rounded-pill shadow-sm">
-                To-Do Planner
-            </a>
+         <!-- Spotify + To-Do Section -->
+        <div class="container my-4">
+            <div class="row justify-content-center">
+                <!-- Spotify Player -->
+                <div class="col-md-6 spotify-player">
+                    <h5>Relax with Some Music</h5>
+                    <iframe style="border-radius:12px" 
+                        src="https://open.spotify.com/embed/album/1WVIJaAboRSwJOe4u0n0Q7?utm_source=generator" 
+                        width="100%" height="380" frameborder="0" allowfullscreen="" 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+                    </iframe>
+                </div>
+
+                <!-- To-Do List -->
+                <div class="col-md-6">
+                    <h5>Today's To-Do List</h5>
+                    <ul id="todo-list" class="list-group mb-3">                     
+                    </ul>
+                    <div class="input-group">
+                        <input type="text" id="todo-input" class="form-control" placeholder="Add new task...">
+                        <button class="btn btn-primary" onclick="addTask()">Add</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Spotify Player -->
-        <div class="spotify-player text-center my-4">
-            <h5>Relax with Some Music</h5>
-            <iframe style="border-radius:12px" 
-                src="https://open.spotify.com/embed/album/1WVIJaAboRSwJOe4u0n0Q7?utm_source=generator" 
-                width="300" height="380" frameborder="0" allowfullscreen="" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-            </iframe>
-        </div>
     </div>
     
 {% else %}
