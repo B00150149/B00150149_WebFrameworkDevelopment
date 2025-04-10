@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
-from .models import Project, Task, Todo, ChallengeTask
+from .models import Project, Task, Todo
+#ChallengeTask
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 #Can only access when logged in
 from django.contrib.auth.decorators import login_required
-from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm
+from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm , ChallengeReviewForm
 
 
 
@@ -168,13 +169,31 @@ def challenge_list(request):
     challenges = Challenge.objects.all().order_by('-start_date')
     return render(request, 'leisureProjects/challengeList.html', {'challenges': challenges})
 
-def challenge_taskList(request , challenge_id):
+def challenge_taskList(request, challenge_id):
     challenge = Challenge.objects.get(id=challenge_id)
-    challengetasks = ChallengeTask.objects.filter(challenge=challenge)
+    reviews = challenge.reviews.all().order_by('-created_at')
     return render(request, 'leisureProjects/challengeTaskList.html', {
         'challenge': challenge,
-        'challengetasks': challengetasks,
+        'reviews': reviews,
         'now': timezone.now()
+    })
+
+@login_required
+def create_review(request, challenge_id):
+    challenge = Challenge.objects.get(id=challenge_id)
+    if request.method == 'POST':
+        form = ChallengeReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.challenge = challenge
+            review.user = request.user
+            review.save()
+            return redirect('challengeTaskList', challenge_id=challenge.id)
+    else:
+        form = ChallengeReviewForm()
+    return render(request, 'leisureProjects/createReview.html', {
+        'form': form,
+        'challenge': challenge
     })
 
 

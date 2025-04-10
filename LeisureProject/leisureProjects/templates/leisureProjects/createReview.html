@@ -1,0 +1,24 @@
+{% load static %}
+{% include 'includes/header.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Add Review for {{ challenge.title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_rating">Rating:</label>
+            {{ form.rating }}
+        </div>
+        <div class="form-group">
+            <label for="id_comment">Comment:</label>
+            {{ form.comment }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+        <a href="{% url 'challengeTaskList' challenge.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
+
+{% include 'includes/footer.html' %}

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Project, Task, Profile, Challenge
+from .models import Project, Task, Profile, Challenge, ChallengeReview
 
 # Form for registering a new user with roles
 class RegisterForm(UserCreationForm):
@@ -67,13 +67,12 @@ class ProjectForm(forms.ModelForm):
 class ChallengeForm(forms.ModelForm):
     class Meta:
         model = Challenge
-        fields = ['title', 'description', 'age_category', 'start_date', 'end_date', 'wallpaper', ]
+        fields = ['title', 'description', 'age_category', 'start_date', 'end_date', 'wallpaper']
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'end_date': forms.DateInput(attrs={'type': 'date'}),
             'wallpaper': forms.RadioSelect(attrs={'class': 'wallpaper-radio'}),
         }
-        
 
 # Form for creating a new task
 class TaskForm(forms.ModelForm):
@@ -81,3 +80,11 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['title', 'description', 'assigned_to', 'due_date']
 
+# Form for creating challenge reviews
+class ChallengeReviewForm(forms.ModelForm):
+    class Meta:
+        model = ChallengeReview
+        fields = ['rating', 'comment']
+        widgets = {
+            'comment': forms.Textarea(attrs={'rows': 3}),
+        }

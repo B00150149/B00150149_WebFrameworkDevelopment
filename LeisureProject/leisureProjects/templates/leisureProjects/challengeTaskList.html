@@ -6,5 +6,25 @@
 <h2>Tasks for Challenge: {{ challenge.title }}</h2>
 <p>Description: {{ challenge.description }}</p>
 
+<div class="mt-4">
+    <h3>Reviews</h3>
+    <a href="{% url 'createReview' challenge.id %}" class="btn btn-primary mb-3">Add Review</a>
+    
+    {% if reviews %}
+        <div class="list-group">
+            {% for review in reviews %}
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <h5>{{ review.user.username }} - {{ review.rating }}/5</h5>
+                        <small>{{ review.created_at }}</small>
+                    </div>
+                    <p>{{ review.comment }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No reviews yet. Be the first to review!</p>
+    {% endif %}
+</div>
 
 {% include 'includes/footer.html' %}
