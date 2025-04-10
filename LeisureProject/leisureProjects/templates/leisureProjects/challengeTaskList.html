@@ -7,47 +7,56 @@
 <p>Description: {{ challenge.description }}</p>
 
 <div class="challenge-meta mb-4">
-    {% if not is_organizer %}
-        {% if is_participant %}
-            <a href="#" class="btn btn-secondary">Already Joined</a>
-        {% else %}
-            <a href="{% url 'joinChallenge' challenge.id %}" class="btn btn-success">Join Challenge</a>
-        {% endif %}
-    {% endif %}
-    
-    <div class="participants-section mt-3">
-        <h4>Participants ({{ participants.count }})</h4>
-        <div class="list-group">
-            {% for participant in participants %}
-            <div class="list-group-item">
-                {{ participant.user.username }}
-            </div>
-            {% empty %}
-            <div class="list-group-item">No participants yet</div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
+   
 
-<div class="mt-4">
-    <h3>Reviews</h3>
-    <a href="{% url 'createReview' challenge.id %}" class="btn btn-primary mb-3">Add Review</a>
-    
-    {% if reviews %}
-        <div class="list-group">
-            {% for review in reviews %}
+    {% if user.profile.role == 'organizer' %}
+        <div class="participants-section mt-3">
+            <h4>Participants ({{ participants.count }})</h4>
+            <div class="list-group">
+                {% for participant in participants %}
                 <div class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <h5>{{ review.user.username }} - {{ review.rating }}/5</h5>
-                        <small>{{ review.created_at }}</small>
-                    </div>
-                    <p>{{ review.comment }}</p>
+                    {{ participant.user.username }}
                 </div>
-            {% endfor %}
+                {% empty %}
+                <div class="list-group-item">No participants yet</div>
+                {% endfor %}
+            </div>
         </div>
     {% else %}
-        <p>No reviews yet. Be the first to review!</p>
+
+        {% if not is_organizer %}
+            {% if is_participant %}
+                <a href="#" class="btn btn-secondary">Already Joined</a>
+            {% else %}
+                <a href="{% url 'joinChallenge' challenge.id %}" class="btn btn-success">Join Challenge</a>
+            {% endif %}
+        {% endif %}
+
+
+        <div class="mt-4">
+            <h3>Reviews</h3>
+            <a href="{% url 'createReview' challenge.id %}" class="btn btn-primary mb-3">Add Review</a>    
+            {% if reviews %}
+                <div class="list-group">
+                    {% for review in reviews %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <h5>{{ review.user.username }} - {{ review.rating }}/5</h5>
+                                <small>{{ review.created_at }}</small>
+                            </div>
+                            <p>{{ review.comment }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No reviews yet. Be the first to review!</p>
+            {% endif %}
+        </div>
+
+
     {% endif %}
 </div>
+
+
 
 {% include 'includes/footer.html' %}
