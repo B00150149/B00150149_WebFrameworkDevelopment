@@ -65,16 +65,5 @@
         </div>
 
 {% endif %}
-    
-<!-- Pomodoro Timer (Initially Hidden) -->
-<div id="pomodoro-timer" class="container text-center" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; width: 300px; padding: 20px; border: 2px solid #2196F3; border-radius: 10px; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
-    <button id="close-button" class="btn btn-danger btn-sm" style="position: absolute; top: 5px; right: 5px; font-size: 16px;">&times;</button>
-    <h5>Pomodoro Timer</h5>
-    <div id="timer-display" class="display-4 mb-3">25:00</div>
-    <button id="start-button" class="btn btn-success btn-sm mx-2">Start</button>
-    <button id="stop-button" class="btn btn-danger btn-sm mx-2" disabled>Stop</button>
-    <button id="reset-button" class="btn btn-secondary btn-sm mx-2">Reset</button>
-    <p class="mt-3" style="font-size: 12px;">Focus for 25 minutes, then take a short break!</p>
-</div>
 
 {% include 'includes/footer.html' %}

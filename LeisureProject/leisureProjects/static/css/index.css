@@ -39,9 +39,6 @@ body {
     justify-content: center;
     text-decoration: none;
 
-    #timer-display {
-    font-weight: bold;
-    color: #333;
 }
 
 #timer-display {
@@ -67,7 +64,7 @@ body {
     height: 100%;
     z-index: 999;
 }
-}
+
 
 /* Image of Hobby at top  */
 .hero-image {
@@ -113,3 +110,19 @@ body {
     margin-left: 40px;
     font-weight: 600;
 }
+
+/* Todo List Styles */
+.completed {
+    opacity: 0.6;
+    background-color: #f8f9fa;
+}
+
+.completed .form-check-label {
+    text-decoration: line-through;
+}
+
+#todo-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+

@@ -15,5 +15,9 @@ urlpatterns = [
     path('logout/', views.logout_view, name="logout"),
     path('taskList/<int:project_id>/', views.task_list, name="taskList"),
     path('tasks/<int:task_id>/toggle/', views.toggle_task_completion, name="toggleTaskCompletion"),
-    path('create-todo/', views.create_todo, name="createTodo"),
+    #to create. delete, iscompleted and get user specific to do list
+    path('create-todo/', views.create_todo, name="createTodo"),  
+    path('todos/', views.get_todos, name='get_todos'),
+    path('todos/<int:todo_id>/delete/', views.delete_todo, name='delete_todo'),
+    path('todos/<int:todo_id>/toggle/', views.toggle_todo_completion, name='toggle_todo'),
 ]

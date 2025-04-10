@@ -13,9 +13,15 @@ from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm
 def index(request):
     if request.user.is_authenticated:
         projects = Project.objects.filter(owner=request.user)
+        #to filter user specific list
+        todos = Todo.objects.filter(user=request.user)   
     else:
-        projects = Project.objects.none()  # Show no projects for anonymous users
-    return render(request, 'leisureProjects/index.html', {'projects': projects})
+        projects = Project.objects.none()
+        todos = Todo.objects.none()
+    return render(request, 'leisureProjects/index.html', {
+        'projects': projects,
+        'todos': todos
+    })
 
 
 def aboutUs(request):
@@ -154,6 +160,8 @@ def toggle_task_completion(request, task_id):
     except Task.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
 
+
+#Reference "https://www.geeksforgeeks.org/python-todo-webapp-using-django/"
 @csrf_exempt
 def create_todo(request):
     if request.method == 'POST':
@@ -166,3 +174,31 @@ def create_todo(request):
             return JsonResponse({'status': 'success', 'id': todo.id})
         return JsonResponse({'status': 'error'}, status=400)
     return JsonResponse({'status': 'error'}, status=405)
+
+@csrf_exempt
+def get_todos(request):
+    if request.user.is_authenticated:
+        todos = Todo.objects.filter(user=request.user).values('id', 'title', 'completed')
+        return JsonResponse({'todos': list(todos)})
+    return JsonResponse({'todos': []})
+
+@csrf_exempt
+@require_POST
+def delete_todo(request, todo_id):
+    try:
+        todo = Todo.objects.get(id=todo_id, user=request.user)
+        todo.delete()
+        return JsonResponse({'status': 'success'})
+    except Todo.DoesNotExist:
+        return JsonResponse({'status': 'error'}, status=404)
+
+@csrf_exempt
+@require_POST
+def toggle_todo_completion(request, todo_id):
+    try:
+        todo = Todo.objects.get(id=todo_id, user=request.user)
+        todo.completed = not todo.completed
+        todo.save()
+        return JsonResponse({'status': 'success', 'completed': todo.completed})
+    except Todo.DoesNotExist:
+        return JsonResponse({'status': 'error'}, status=404)
