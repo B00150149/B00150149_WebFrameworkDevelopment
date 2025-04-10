@@ -18,6 +18,7 @@ urlpatterns = [
     path('createChallenge/', views.create_challenge, name='createChallenge'),
     path('challengeList/', views.challenge_list, name='challengeList'),
     path('challengeTaskList/<int:challenge_id>/', views.challenge_taskList, name="challengeTaskList"),
+    path('joinChallenge/<int:challenge_id>/', views.join_challenge, name="joinChallenge"),
     #url for review with challange_id
     path('challenge/<int:challenge_id>/review/', views.create_review, name='createReview'),
     #to create. delete, iscompleted and get user specific to do list

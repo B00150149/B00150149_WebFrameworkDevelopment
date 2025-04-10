@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 #Can only access when logged in
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm , ChallengeReviewForm
+from .models import ChallengeParticipant
 
 
 
@@ -172,13 +173,24 @@ def challenge_list(request):
 def challenge_taskList(request, challenge_id):
     challenge = Challenge.objects.get(id=challenge_id)
     reviews = challenge.reviews.all().order_by('-created_at')
+    participants = challenge.participants.all()
     return render(request, 'leisureProjects/challengeTaskList.html', {
         'challenge': challenge,
         'reviews': reviews,
-        'now': timezone.now()
+        'participants': participants,
+        'now': timezone.now(),
+        'is_participant': request.user.is_authenticated and 
+                         challenge.participants.filter(user=request.user).exists()
     })
 
 @login_required
+def join_challenge(request, challenge_id):
+    challenge = Challenge.objects.get(id=challenge_id)
+    # Check if user already joined
+    if not ChallengeParticipant.objects.filter(challenge=challenge, user=request.user).exists():
+        ChallengeParticipant.objects.create(challenge=challenge, user=request.user)
+    return redirect('challengeTaskList', challenge_id=challenge.id)
+
 def create_review(request, challenge_id):
     challenge = Challenge.objects.get(id=challenge_id)
     if request.method == 'POST':

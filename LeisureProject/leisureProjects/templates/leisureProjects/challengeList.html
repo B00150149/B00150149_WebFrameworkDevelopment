@@ -19,6 +19,9 @@
             <h3>{{ challenge.title }}</h3>
             <p><strong>Category:</strong> {{ challenge.age_category }}</p>
             <p><strong>Start:</strong> {{ challenge.start_date }} | <strong>End:</strong> {{ challenge.end_date }}</p>
+            <div class="participant-count">
+                <span class="badge">{{ challenge.participants.count }} participant{{ challenge.participants.count|pluralize }}</span>
+            </div>
         </div>
     </div>
     </a>
