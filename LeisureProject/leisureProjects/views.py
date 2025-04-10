@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Project, Task, Todo
+from .models import Project, Task, Todo, ChallengeTask
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
@@ -103,6 +103,10 @@ def create_project(request):
         'collaborate': request.GET.get('collaborate') == 'true'
     })
 
+
+
+
+###########################Tasks#########################################
 from django.utils import timezone
 
 @login_required
@@ -115,22 +119,7 @@ def task_list(request, project_id):
         'now': timezone.now()
     })
 
-@login_required
-def create_challenge(request):
-    if request.method == 'POST':
-        form = ChallengeForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('challengeList') 
-    else:
-        form = ChallengeForm()
-    return render(request, 'leisureProjects/createChallenge.html', {'form': form})
 
-from .models import Challenge
-
-def challenge_list(request):
-    challenges = Challenge.objects.all().order_by('-start_date')
-    return render(request, 'leisureProjects/challengeList.html', {'challenges': challenges})
 
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
@@ -161,6 +150,35 @@ def toggle_task_completion(request, task_id):
         return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
 
 
+####################CHALLENGE###############################################################################################
+@login_required
+def create_challenge(request):
+    if request.method == 'POST':
+        form = ChallengeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('challengeList') 
+    else:
+        form = ChallengeForm()
+    return render(request, 'leisureProjects/createChallenge.html', {'form': form})
+
+from .models import Challenge
+
+def challenge_list(request):
+    challenges = Challenge.objects.all().order_by('-start_date')
+    return render(request, 'leisureProjects/challengeList.html', {'challenges': challenges})
+
+def challenge_taskList(request , challenge_id):
+    challenge = Challenge.objects.get(id=challenge_id)
+    challengetasks = ChallengeTask.objects.filter(challenge=challenge)
+    return render(request, 'leisureProjects/challengeTaskList.html', {
+        'challenge': challenge,
+        'challengetasks': challengetasks,
+        'now': timezone.now()
+    })
+
+
+####################to do list###############################################################################################
 #Reference "https://www.geeksforgeeks.org/python-todo-webapp-using-django/"
 @csrf_exempt
 def create_todo(request):

@@ -12,7 +12,7 @@
 {% if challenges %}
 <div class="project-container">
     {% for challenge in challenges %}
-    <a href="#" class="project-link">
+    <a href="{% url 'challengeTaskList' challenge.id %}" class="project-link">
     <div class="project-card">
         <img src="{% static 'images/' %}{{ challenge.wallpaper }}" alt="{{ challenge.title }} wallpaper" class="project-image">
         <div class="project-info">

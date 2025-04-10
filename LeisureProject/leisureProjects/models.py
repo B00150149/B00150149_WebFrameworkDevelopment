@@ -93,6 +93,17 @@ class TimeLog(models.Model):
     def __str__(self):
         return f'TimeLog: {self.task.title} by {self.user.username} (From {self.start_time} to {self.end_time})'
 
+class ChallengeTask(models.Model):
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    completed = models.BooleanField(default=False)
+    due_date = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f'Challenge Task: {self.title} (Assigned to: {self.assigned_to.username if self.assigned_to else "Unassigned"})'
+
 class Todo(models.Model):
     title = models.CharField(max_length=200)
     completed = models.BooleanField(default=False)
