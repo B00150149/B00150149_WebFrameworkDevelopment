@@ -1,16 +1,21 @@
- 
-// Pomodoro Timer Logic
 document.addEventListener('DOMContentLoaded', function() {
     let timer;
-    let minutes = 25;
     let seconds = 0;
     let isRunning = false;
+    const timerDisplay = document.getElementById('timer-display');
+    const timeInput = document.getElementById('time-input');
 
     // Function to update the timer display
     function updateTimerDisplay() {
-        let minutesString = minutes < 10 ? "0" + minutes : minutes;
-        let secondsString = seconds < 10 ? "0" + seconds : seconds;
-        document.getElementById('timer-display').textContent = `${minutesString}:${secondsString}`;
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        
+        const hoursString = hours.toString().padStart(2, '0');
+        const minutesString = minutes.toString().padStart(2, '0');
+        const secondsString = secs.toString().padStart(2, '0');
+        
+        timerDisplay.textContent = `${hoursString}:${minutesString}:${secondsString}`;
     }
 
     // Start button functionality
@@ -18,18 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isRunning) {
             isRunning = true;
             timer = setInterval(function() {
-                if (seconds === 0) {
-                    if (minutes === 0) {
-                        clearInterval(timer);
-                        isRunning = false;
-                        alert("Pomodoro session complete! Take a break.");
-                    } else {
-                        minutes--;
-                        seconds = 59;
-                    }
-                } else {
-                    seconds--;
-                }
+                seconds++;
                 updateTimerDisplay();
             }, 1000);
             document.getElementById('stop-button').disabled = false;
@@ -51,17 +45,14 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('reset-button').addEventListener('click', function() {
         clearInterval(timer);
         isRunning = false;
-        minutes = 25;
         seconds = 0;
         updateTimerDisplay();
         document.getElementById('start-button').disabled = false;
         document.getElementById('stop-button').disabled = true;
     });
 
-    // Close Pomodoro timer when "X" button is clicked
-    document.getElementById('close-button').addEventListener('click', function() {
-        document.getElementById('pomodoro-timer').style.display = 'none';
-    });
+    // // Close timer when "X" button is clicked
+    // document.getElementById('close-button').addEventListener('click', function() {
+    //     document.getElementById('pomodoro-timer').style.display = 'none';
+    // });
 });
-
-
