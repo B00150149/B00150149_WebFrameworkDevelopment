@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Project, Task, Profile, Challenge, ChallengeReview
+from .models import Project, Task, Profile, Challenge, ChallengeReview, MoodRating
 
 # Form for registering a new user with roles
 class RegisterForm(UserCreationForm):
@@ -87,4 +87,15 @@ class ChallengeReviewForm(forms.ModelForm):
         fields = ['rating', 'comment']
         widgets = {
             'comment': forms.Textarea(attrs={'rows': 3}),
+        }
+
+class MoodRatingForm(forms.ModelForm):
+    class Meta:
+        model = MoodRating
+        fields = ['rating', 'notes']
+        widgets = {
+            'notes': forms.Textarea(attrs={
+                'rows': 3,
+                'placeholder': 'Optional notes about your mood...'
+            }),
         }

@@ -7,8 +7,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 #Can only access when logged in
 from django.contrib.auth.decorators import login_required
-from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm , ChallengeReviewForm
-from .models import ChallengeParticipant
+from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm , MoodRatingForm, ChallengeReviewForm
+from .models import ChallengeParticipant, MoodRating
 
 
 
@@ -251,3 +251,31 @@ def toggle_todo_completion(request, todo_id):
         return JsonResponse({'status': 'success', 'completed': todo.completed})
     except Todo.DoesNotExist:
         return JsonResponse({'status': 'error'}, status=404)
+
+@csrf_exempt
+@require_POST
+def submit_mood_rating(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'status': 'error', 'message': 'Authentication required'}, status=401)
+    
+    mood_rating = MoodRating()
+    mood_rating.user = request.user
+    mood_rating.rating = request.POST.get('rating')
+    mood_rating.notes = request.POST.get('notes')
+    mood_rating.session_reference = request.POST.get('session_reference')
+    
+    # Get project and task IDs if provided
+    project_id = request.POST.get('project')
+    task_id = request.POST.get('task')
+    
+    if project_id:
+        mood_rating.project_id = project_id
+    if task_id:
+        mood_rating.task_id = task_id
+
+    mood_rating.save()
+    return JsonResponse({
+        'status': 'success',
+        'rating': mood_rating.rating,
+        'timestamp': mood_rating.timestamp.isoformat()
+    })

@@ -118,3 +118,28 @@ class ChallengeParticipant(models.Model):
 
     def __str__(self):
         return f'{self.user.username} joined {self.challenge.title} on {self.join_date}'
+
+class MoodRating(models.Model):
+    RATING_CHOICES = [
+        (1, 'Very Negative'),
+        (2, 'Negative'),
+        (3, 'Neutral'), 
+        (4, 'Positive'),
+        (5, 'Very Positive')
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
+    rating = models.IntegerField(choices=RATING_CHOICES)
+    session_reference = models.CharField(max_length=100, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        context = []
+        if self.project:
+            context.append(f"Project: {self.project.name}")
+        if self.task:
+            context.append(f"Task: {self.task.title}")
+        return f'Mood: {self.get_rating_display()} by {self.user.username} at {self.timestamp} ({", ".join(context)})'

@@ -79,3 +79,17 @@
   .btn-secondary:hover {
     background-color: #5a6268;
   }
+
+/* Mood rating form button group fixes */
+.btn-group.btn-group-toggle.w-100 {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.btn-group.btn-group-toggle.w-100 .btn {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1 1 auto;
+    min-width: 0;
+}

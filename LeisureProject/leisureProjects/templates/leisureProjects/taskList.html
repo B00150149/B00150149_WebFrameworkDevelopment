@@ -22,11 +22,6 @@
       </small>
     </div>
 
-    <!-- Static Progress Bar as in image -->
-    <div class="progress mb-4" style="height: 6px;">
-      <div id="taskProgressBar" class="progress-bar bg-primary" style="width: 0%;"></div>
-    </div>
-    
 
     <ul class="list-group list-group-flush">
       {% for task in tasks %}
@@ -56,6 +51,8 @@
       </div>
     </div>
   </div>
+
+  <!-- Timer -->
   <div class="col-md-4">
       <div class="card shadow rounded-4 p-4 h-100">
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -72,8 +69,47 @@
         </div>
       </div>
     </div>
+
+    <!-- Mood Tracker Card -->
+    <div class="card shadow rounded-4 p-4 mt-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold">Mood Tracker</h5>
+      </div>
+      <form id="moodRatingForm">
+        <div class="form-group">
+          <label>How are you feeling today?</label>
+          <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+            <label class="btn btn-outline-primary">
+              <input type="radio" name="rating" value="1" required> Very Negative
+            </label>
+            <label class="btn btn-outline-primary">
+              <input type="radio" name="rating" value="2"> Negative
+            </label>
+            <label class="btn btn-outline-primary">
+              <input type="radio" name="rating" value="3"> Neutral
+            </label>
+            <label class="btn btn-outline-primary">
+              <input type="radio" name="rating" value="4"> Positive
+            </label>
+            <label class="btn btn-outline-primary">
+              <input type="radio" name="rating" value="5"> Very Positive
+            </label>
+          </div>
+        </div>
+        <div class="form-group mt-3">
+          <textarea class="form-control" name="notes" placeholder="Optional notes..." rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
+      </form>
+      <div id="moodResponse" class="mt-3"></div>
+    </div>
+
   </div>
 </div>
 
+   
+
+<script src="{% static 'js/moodTracker.js' %}"></script>
 
 {% include 'includes/footer.html' %}
+
