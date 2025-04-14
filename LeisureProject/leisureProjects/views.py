@@ -13,6 +13,8 @@ from .models import ChallengeParticipant, MoodRating
 
 
 def index(request):
+    from .models import ChallengeReview  # Import the ChallengeReview model
+
     if request.user.is_authenticated:
         projects = Project.objects.filter(owner=request.user)
         #to filter user specific list
@@ -172,7 +174,11 @@ def challenge_list(request):
 
 def challenge_taskList(request, challenge_id):
     challenge = Challenge.objects.get(id=challenge_id)
-    reviews = challenge.reviews.all().order_by('-created_at')
+    #only want admin to see review page code 
+    if request.user.is_authenticated and request.user.username == "admin" and request.user.email == "admin@admin.com":
+        reviews = challenge.reviews.all().order_by('-created_at')
+    else:
+        reviews = challenge.reviews.none()
     participants = challenge.participants.all()
     return render(request, 'leisureProjects/challengeTaskList.html', {
         'challenge': challenge,
