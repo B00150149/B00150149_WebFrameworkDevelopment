@@ -36,12 +36,12 @@
         <div class="mt-4">
             <h3>Reviews</h3>
             <a href="{% url 'createReview' challenge.id %}" class="btn btn-primary mb-3">Add Review</a>    
-            {% if reviews %}
+            <!-- {% if reviews %}
                 <div class="list-group">
                     {% for review in reviews %}
                         <div class="list-group-item">
                             <div class="d-flex justify-content-between">
-                                <h5>{{ review.user.username }} - {{ review.rating }}/5</h5>
+                                <h5>{{ review.user.username }} </h5>
                                 <small>{{ review.created_at }}</small>
                             </div>
                             <p>{{ review.comment }}</p>
@@ -50,7 +50,21 @@
                 </div>
             {% else %}
                 <p>No reviews yet. Be the first to review!</p>
-            {% endif %}
+            {% endif %} -->
+
+            {% if reviews %}
+            <div class="list-group">
+                {% for review in reviews %}
+                    <div class="list-group-item">
+                        <h5>Rating: {{ review.rating }} / 5</h5>
+                        <p>{{ review.comment }}</p>
+                        <small>By {{ review.user.username }} on {{ review.created_at|date:"F j, Y, g:i a" }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Add review for this challenge.</p>
+        {% endif %}
         </div>
 
 
