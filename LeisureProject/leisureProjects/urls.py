@@ -14,6 +14,7 @@ urlpatterns = [
     path('createTask/<int:project_id>/', views.create_task, name="createTask"),
     path('taskList/<int:project_id>/', views.task_list, name="taskList"),
     path('tasks/<int:task_id>/toggle/', views.toggle_task_completion, name="toggleTaskCompletion"),
+    path('taskProgressGraph/<int:project_id>/', views.task_progress_graph, name='taskProgressGraph'),
     #challenge
     path('createChallenge/', views.create_challenge, name='createChallenge'),
     path('challengeList/', views.challenge_list, name='challengeList'),

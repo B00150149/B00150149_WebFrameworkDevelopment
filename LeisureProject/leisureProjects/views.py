@@ -163,6 +163,11 @@ def delete_user(request, user_id):
 
 ###########################Tasks#########################################
 
+import json
+from django.db.models import Sum, F, ExpressionWrapper, DurationField
+from django.utils.timezone import make_aware
+from datetime import timedelta
+
 @login_required
 def task_list(request, project_id):
     project = Project.objects.get(id=project_id)
@@ -172,6 +177,31 @@ def task_list(request, project_id):
         'tasks': tasks,
         'now': timezone.now()
     })
+
+@login_required
+def task_progress_graph(request, project_id):
+    project = Project.objects.get(id=project_id)
+    tasks = Task.objects.filter(project=project)
+
+    # Annotate each task with total time spent in seconds
+    time_spent_expr = ExpressionWrapper(F('timelog__end_time') - F('timelog__start_time'), output_field=DurationField())
+    tasks_with_time = tasks.annotate(total_time=Sum(time_spent_expr))
+
+    task_labels = []
+    time_data = []
+
+    for task in tasks_with_time:
+        task_labels.append(task.title)
+        total_seconds = task.total_time.total_seconds() if task.total_time else 0
+        hours = round(total_seconds / 3600, 2)
+        time_data.append(hours)
+
+    context = {
+        'project': project,
+        'task_labels': json.dumps(task_labels),
+        'time_data': json.dumps(time_data),
+    }
+    return render(request, 'leisureProjects/taskProgressGraph.html', context)
 
 
 
