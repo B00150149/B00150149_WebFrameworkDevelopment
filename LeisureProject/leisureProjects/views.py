@@ -4,14 +4,17 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.http import require_POST
 
-from .models import Project, Task, Todo
-#ChallengeTask
+from .models import Project, Task, Todo, TimeLog
+from django.utils import timezone
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import Project, Task, Todo, ChallengeParticipant, MoodRating
 from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm , MoodRatingForm, ChallengeReviewForm
-from .models import ChallengeParticipant, MoodRating
+
 
 
 def is_admin(user):
@@ -71,7 +74,10 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('index')
+            if user.is_superuser:
+                return redirect('userList')
+            else:
+                return redirect('index')
     else:
         form = AuthenticationForm()
     return render(request, 'leisureProjects/login.html', {'form': form})
@@ -196,6 +202,42 @@ def toggle_task_completion(request, task_id):
         return JsonResponse({'success': True, 'completed': task.completed})
     except Task.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
+
+@csrf_exempt
+@require_POST
+def log_time_spent(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'success': False, 'error': 'Authentication required'}, status=401)
+    try:
+        data = json.loads(request.body)
+        task_id = data.get('task_id')
+        start_time_str = data.get('start_time')
+        end_time_str = data.get('end_time')
+
+        if not all([task_id, start_time_str, end_time_str]):
+            return JsonResponse({'success': False, 'error': 'Missing parameters'}, status=400)
+
+        task = Task.objects.get(id=task_id)
+        start_time = timezone.datetime.fromisoformat(start_time_str)
+        end_time = timezone.datetime.fromisoformat(end_time_str)
+
+        # Ensure start_time and end_time are timezone aware
+        if timezone.is_naive(start_time):
+            start_time = timezone.make_aware(start_time, timezone.get_current_timezone())
+        if timezone.is_naive(end_time):
+            end_time = timezone.make_aware(end_time, timezone.get_current_timezone())
+
+        TimeLog.objects.create(
+            task=task,
+            user=request.user,
+            start_time=start_time,
+            end_time=end_time
+        )
+        return JsonResponse({'success': True})
+    except Task.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 
 ####################CHALLENGE###############################################################################################
