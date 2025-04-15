@@ -107,6 +107,11 @@ def create_project(request):
         'collaborate': request.GET.get('collaborate') == 'true'
     })
 
+@login_required
+def user_list(request):
+    users = User.objects.select_related('profile').all()
+    return render(request, 'leisureProjects/user_list.html', {'users': users})
+
 
 
 

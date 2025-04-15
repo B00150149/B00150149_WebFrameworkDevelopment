@@ -27,4 +27,5 @@ urlpatterns = [
     path('todos/<int:todo_id>/delete/', views.delete_todo, name='delete_todo'),
     path('todos/<int:todo_id>/toggle/', views.toggle_todo_completion, name='toggle_todo'),
     path('mood-rating/', views.submit_mood_rating, name='submit_mood_rating'),
+    path('userList/', views.user_list, name='userList'),
 ]
