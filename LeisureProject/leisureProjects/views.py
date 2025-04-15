@@ -1,15 +1,34 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.http import require_POST
+
 from .models import Project, Task, Todo
 #ChallengeTask
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-#Can only access when logged in
-from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, TaskForm,  RegisterForm, ChallengeForm , MoodRatingForm, ChallengeReviewForm
 from .models import ChallengeParticipant, MoodRating
 
+
+def is_admin(user):
+    return user.is_authenticated and user.is_superuser
+
+
+@login_required
+@user_passes_test(is_admin)
+@require_POST
+def delete_user(request, user_id):
+    user_to_delete = get_object_or_404(User, id=user_id)
+    if user_to_delete == request.user:
+        messages.error(request, "You cannot delete yourself.")
+    else:
+        user_to_delete.delete()
+        messages.success(request, f"User {user_to_delete.username} has been deleted.")
+    return redirect('userList')
 
 
 def index(request):
@@ -76,8 +95,6 @@ def project_list(request):
         'is_premium': is_premium
     })
 
-from django.contrib.auth.models import User
-
 def create_project(request):
     is_premium = request.user.is_authenticated and hasattr(request.user, 'profile') and request.user.profile.role == 'premium'
     
@@ -107,16 +124,38 @@ def create_project(request):
         'collaborate': request.GET.get('collaborate') == 'true'
     })
 
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.shortcuts import get_object_or_404
+
 @login_required
 def user_list(request):
     users = User.objects.select_related('profile').all()
     return render(request, 'leisureProjects/user_list.html', {'users': users})
 
+@login_required
+def delete_user(request, user_id):
+    # Only allow admin to delete users
+    if not request.user.is_superuser and not (request.user.username == 'admin' and request.user.email == 'admin@admin.com'):
+        messages.error(request, "You do not have permission to delete users.")
+        return redirect('userList')
+
+    user_to_delete = get_object_or_404(User, id=user_id)
+
+    if request.method == 'POST':
+        if user_to_delete == request.user:
+            messages.error(request, "You cannot delete yourself.")
+            return redirect('userList')
+        user_to_delete.delete()
+        messages.success(request, f"User {user_to_delete.username} has been deleted.")
+        return redirect('userList')
+    else:
+        messages.error(request, "Invalid request method.")
+        return redirect('userList')
 
 
 
 ###########################Tasks#########################################
-from django.utils import timezone
 
 @login_required
 def task_list(request, project_id):
