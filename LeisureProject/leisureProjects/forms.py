@@ -78,7 +78,7 @@ class ChallengeForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'assigned_to', 'due_date']
+        fields = ['title', 'description',  'due_date'] #'assigned_to',
 
 # Form for creating challenge reviews
 class ChallengeReviewForm(forms.ModelForm):

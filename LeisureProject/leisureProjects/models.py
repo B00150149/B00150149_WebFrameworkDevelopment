@@ -76,7 +76,7 @@ class Task(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
-    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    #assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     completed = models.BooleanField(default=False)
     due_date = models.DateTimeField(null=True, blank=True)
 

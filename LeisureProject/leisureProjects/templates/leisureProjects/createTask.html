@@ -1,11 +1,17 @@
 {% include 'includes/header.html' %}
 
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 
-<h2>Add Task to {{ project.name }}</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Add Task</button>
-</form>
+    <div class="login-container">
+      <div class="login-box">
+        <h2>Add Task to {{ project.name }}</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Add Task</button>
+        </form>
+      </div>
+    </div>
 
 {% include 'includes/footer.html' %}

@@ -1,14 +1,19 @@
 {% include 'includes/header.html' %}
 
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
-<a href="{% url 'register' %}">Don't have an account? Sign up</a>
-
+    <div class="login-container">
+      <div class="login-box">
+        <h2>Login</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Login</button>
+        </form>
+        <a href="{% url 'register' %}">Don't have an account? Sign up</a>
+      </div>
+    </div>
 
 {% include 'includes/footer.html' %}
 
