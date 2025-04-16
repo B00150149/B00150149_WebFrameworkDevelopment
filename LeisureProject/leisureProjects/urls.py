@@ -31,4 +31,5 @@ urlpatterns = [
     path('userList/', views.user_list, name='userList'),
     path('userList/delete/<int:user_id>/', views.delete_user, name='delete_user'),
     path('tasks/log_time/', views.log_time_spent, name='log_time_spent'),
+    path('userList/edit/<int:user_id>/', views.edit_user, name='edit_user'),
 ]

@@ -99,3 +99,39 @@ class MoodRatingForm(forms.ModelForm):
                 'placeholder': 'Optional notes about your mood...'
             }),
         }
+
+# Form for editing user information
+class UserEditForm(forms.ModelForm):
+    ROLE_CHOICES = [
+        ('user', 'Standard User'),
+        ('premium', 'Premium User'),
+        ('organizer', 'Event Organizer'),
+    ]
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.Select(), label="Select Role")
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+    def __init__(self, *args, **kwargs):
+        # Pop the user instance to get profile role
+        user_instance = kwargs.get('instance', None)
+        super().__init__(*args, **kwargs)
+        if user_instance:
+            try:
+                profile = user_instance.profile
+                self.fields['role'].initial = profile.role
+            except:
+                pass
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        role = self.cleaned_data.get('role')
+        if commit:
+            user.save()
+            # Update or create profile role
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.role = role
+            profile.email = user.email
+            profile.save()
+        return user

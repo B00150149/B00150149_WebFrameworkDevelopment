@@ -140,6 +140,27 @@ def user_list(request):
     return render(request, 'leisureProjects/user_list.html', {'users': users})
 
 @login_required
+def edit_user(request, user_id):
+    if not request.user.is_superuser and not (request.user.username == 'admin' and request.user.email == 'admin@admin.com'):
+        messages.error(request, "You do not have permission to edit users.")
+        return redirect('userList')
+
+    user_to_edit = get_object_or_404(User, id=user_id)
+
+    from .forms import UserEditForm
+
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=user_to_edit)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"User {user_to_edit.username} has been updated.")
+            return redirect('userList')
+    else:
+        form = UserEditForm(instance=user_to_edit)
+
+    return render(request, 'leisureProjects/edit_user.html', {'form': form, 'user_to_edit': user_to_edit})
+
+@login_required
 def delete_user(request, user_id):
     # Only allow admin to delete users
     if not request.user.is_superuser and not (request.user.username == 'admin' and request.user.email == 'admin@admin.com'):
